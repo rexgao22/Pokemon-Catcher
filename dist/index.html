@@ -8,14 +8,23 @@
     <title>Pokemon Catch</title>
     <script type="application/javascript" src="./main.js"></script>
 </head>
-<body>
+<body class="pokemon">
     
-    <div id="menus" class='menus'>
-        <div class="menu menu--main">
+    <div >
+        <audio id="audio" type="audio/mpeg" src="../dist/audio/opening.mp3" autoplay="autoplay" loop="loop"  ></audio>
+        <input type="button"  id="music-btn" class = "music"></input>
+        <div class="menu" id="menus" >
             <header>Pokemon Catch</header>
             <button type="button" id="play-btn" >Start</button>
             <button type="button" id="game-intro">Game Intro</button>
         </div>
+
+         <article id= "intro" class="intro">
+            <p>&#8593 up, &#8595 down, &#8592 left,&#8594 right - Move your Pokemon Traner!</p>
+            <p>Space Key - Throw Pokemon Ball!</p>
+            <p>Catch'em All before time run out</p>
+            <button type="button" id="back">Back</button>
+        </article>
         <!-- <div class="menu menu--pause">
             <h1>Pause</h1>
             <button type="button" class="resume-btn">Resume</button>
