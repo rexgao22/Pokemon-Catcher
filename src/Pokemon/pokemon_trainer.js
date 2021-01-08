@@ -7,8 +7,8 @@ class PokemonTrainer {
     this.height = height;
     this.width = width;
     this.speed = 250;
-    this.x = 200;
-    this.y = 200;
+    this.x = 300;
+    this.y = 300;
     this.sprite = new Sprite(370, 383);
   }
 

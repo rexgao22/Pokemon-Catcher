@@ -11,7 +11,8 @@ class Pokemon {
     this.y = 32 + Math.random() * (this.height - 64);
     this.followSpeed = 85;
     this.sprite = new Sprite(228, 228);
-    this.currentFrame = 0
+    this.currentFrame = 0;
+
   }
   wrap(coord, max) {
     if (coord < 0) {
