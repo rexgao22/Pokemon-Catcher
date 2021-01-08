@@ -29,11 +29,13 @@ body {
 }
 
 .canvas {
+  cursor: none;
   display: none;
   touch-action: none;
   transform: translateZ(0);
   z-index: 1;
-  margin: 200px 600px 300px 700px;
+  margin: auto;
+  margin-top: 120px;
 }
 
 .music{
@@ -83,7 +85,7 @@ body {
 
 .intro p{
     padding-bottom: 30px;
-    font-family: pkSolid;
+    font-family: pkHollow;
     font-size: 29px;
 }
 
@@ -96,7 +98,7 @@ button {
   width: 400px;
   height: 70px;
   border-radius: 30px;
-  font-family: pkSolid;
+  font-family: pkHollow;
   font-size: 2.6rem;
   font-weight: 600;
   color: var(--text);

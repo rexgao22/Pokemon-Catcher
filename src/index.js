@@ -9,9 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicbtn = document.getElementById("music-btn");
   const audio = document.getElementById("audio");
 
-  game.setCanvas();
   game.bindKeyListener();
-  //   game.gameCountDown();
   game.start();
   playbtn.onclick = function () {
     document.getElementById("menus").style.display = "none";
