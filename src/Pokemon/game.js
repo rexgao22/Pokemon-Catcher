@@ -2,6 +2,7 @@ const Level = require("./level");
 const Pokemon = require("./pokemon");
 const PokemonTrainer = require("./pokemon_trainer");
 const Pokeball = require("./pokeball");
+const Board = require("./board");
 const backgroundImg = require("../../dist/image/background1.png");
 
 class Game {
@@ -22,7 +23,6 @@ class Game {
     this.keysStore = [];
     this.start = this.start.bind(this);
     this.bindKeyListener = this.bindKeyListener.bind(this);
-    this.checkImg = this.checkImg.bind(this);
     this.gameCountDown = this.gameCountDown.bind(this);
     this.counter = this.counter.bind(this);
     this.currentFrame = 0;
@@ -30,7 +30,9 @@ class Game {
     this.boardCanvas.width = 512;
     this.boardCanvas.height = 480;
     this.pokeBalls = [];
-
+    this.ballPool = [];
+    this.cooldown = 5;
+    this.counter = 0;
   }
 
   checkImg() {
@@ -76,6 +78,7 @@ class Game {
     if (38 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 3;
+      this.pokemon.checkStatus("active");
       this.trainer.y -= this.trainer.speed * val;
       this.trainer.y = this.wrap(this.trainer.y, this.boardCanvas.height);
     }
@@ -83,6 +86,7 @@ class Game {
     if (40 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 0;
+      this.pokemon.checkStatus("active");
       this.trainer.y += this.trainer.speed * val;
       this.trainer.y = this.wrap(this.trainer.y, this.boardCanvas.height);
     }
@@ -90,6 +94,7 @@ class Game {
     if (37 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 1;
+      this.pokemon.checkStatus("active");
       this.trainer.x -= this.trainer.speed * val;
       this.trainer.x = this.wrap(this.trainer.x, this.boardCanvas.width);
     }
@@ -97,14 +102,19 @@ class Game {
     if (39 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 2;
+      this.pokemon.checkStatus("active");
       this.trainer.x += this.trainer.speed * val;
       this.trainer.x = this.wrap(this.trainer.x, this.boardCanvas.width);
     }
     //check catching
     if (32 in this.keysStore) {
-      const pokeball = new Pokeball(this.trainer.x, this.trainer.y, this.ctx, this.moveDirection)
-      this.pokeBalls.push(pokeball);
+      this.counter += 1;
+      if (this.counter % this.cooldown === 0) {
+        this.create();
+        this.counter = 0;
+      }
     }
+
     if (
       this.trainer.x <= this.pokemon.x + 30 &&
       this.pokemon.x <= this.trainer.x + 30 &&
@@ -113,24 +123,38 @@ class Game {
     ) {
       this.finished = true;
     }
-    this.pokeBalls.forEach((ball)=>{
-       if(
-      ball.x <= this.pokemon.x + 30 &&
-      this.pokemon.x <= ball.x + 30 &&
-      ball.y <= this.pokemon.y + 30 &&
-      this.pokemon.y <= ball.y + 30
-    ){
-      this.pokeCount += 1;
-      this.pokemon.resetPkPos();
-      this.remove(ball);
-    }
-    })
-    
+    this.pokeBalls.forEach((ball) => {
+      if (
+        ball.x <= this.pokemon.x + 30 &&
+        this.pokemon.x <= ball.x + 30 &&
+        ball.y <= this.pokemon.y + 30 &&
+        this.pokemon.y <= ball.y + 30
+      ) {
+        this.pokeCount += 1;
+        this.pokemon.resetPkPos();
+        this.remove(ball);
+      }
+    });
+  }
+
+  create() {
+    this.pokeBalls.push(
+      this.ballPool.length > 0
+        ? this.ballPool.pop()
+        : new Pokeball(
+            this.trainer.x,
+            this.trainer.y,
+            this.ctx,
+            this.moveDirection
+          )
+    );
   }
 
   remove(pokeball) {
+    this.ballPool.push(pokeball);
     this.pokeBalls.splice(this.pokeBalls.indexOf(pokeball), 1);
   }
+
   render() {
     this.checkImg();
     if (this.bgStatus) {
@@ -151,12 +175,14 @@ class Game {
         this.currentFrame,
         this.moveDirection
       );
-      this.pokeBalls.forEach((ball)=>{
-        if(this.isOutOfBounds(ball.x, ball.y)){
-          this.remove(ball);
-        }
-      })
-      this.pokeBalls.forEach((ball)=> {ball.drawBall()})
+      // this.pokeBalls.forEach((ball) => {
+      //   if (this.isOutOfBounds(ball.x, ball.y)) {
+      //     this.remove(ball);
+      //   }
+      // });
+      this.pokeBalls.forEach((ball) => {
+        ball.drawBall();
+      });
     }
     this.ctx.fillStyle = "rgb(250, 250, 250)";
     this.ctx.font = "24px Helvetica";

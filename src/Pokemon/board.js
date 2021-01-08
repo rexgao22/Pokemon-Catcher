@@ -5,7 +5,7 @@ class Board {
     this.bgImg = new Image();
     this.bgImg.src = backgroundImg;
     this.boardCanvas = boardCanvas;
-    this.ctx = boardCanvas.getContext("2d");
+    this.bgStatus = false;
   }
 
   checkImg() {
@@ -14,12 +14,12 @@ class Board {
     };
   }
   
-  drawBoard() {
+  drawBoard(ctx) {
     this.checkImg();
     this.boardCanvas.width = 512;
     this.boardCanvas.height = 480;
     if (this.bgStatus) {
-      this.ctx.drawImage(this.bgImg, 0, 0);
+      ctx.drawImage(this.bgImg, 0, 0);
     }
   }
 }

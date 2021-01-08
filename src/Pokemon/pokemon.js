@@ -7,12 +7,12 @@ class Pokemon {
     this.speed = 100;
     this.height = height;
     this.width = width;
-    this.x = 32 + Math.random() * (this.width - 64);
-    this.y = 32 + Math.random() * (this.height - 64);
-    this.followSpeed = 85;
+    this.x = Math.random() * this.width;
+    this.y = Math.random() * this.height;
+    this.followSpeed = 50;
     this.sprite = new Sprite(228, 228);
     this.currentFrame = 0;
-
+    this.pokeStatus = "idle"
   }
   wrap(coord, max) {
     if (coord < 0) {
@@ -23,15 +23,26 @@ class Pokemon {
       return coord;
     }
   }
-
+  checkStatus(pokeStatus){
+    this.pokeStatus = pokeStatus;
+  }
   setMoveDirection(trainX, trainY) {
-    const distX = trainX + 16 - this.x;
-    const distY = trainY + 24 - this.y;
-    const mag = Math.sqrt(distX * distX + distY * distY);
-    const speedX = (distX / mag) * (0.02 * this.followSpeed);
-    const speedY = (distY / mag) * (0.02 * this.followSpeed);
-    this.x += speedX;
-    this.y += speedY;
+    if(this.pokeStatus !== "idle"){
+      const distX = trainX + 16 - this.x;
+      const distY = trainY + 24 - this.y;
+      const mag = Math.sqrt(distX * distX + distY * distY);
+      const speedX = (distX / mag) * (0.02 * this.followSpeed);
+      const speedY = (distY / mag) * (0.02 * this.followSpeed);
+      this.x += speedX;
+      this.y += speedY;
+    }else{
+      const distX = this.trainX - this.x;
+      const distY = this.trainY - this.y;
+      const normalX = 1 / distX;
+      const normalY = 1 / distY;
+      this.x += 0;
+      this.y += 0;
+    }
   }
 
   drawPoke(ctx, trainX, trainY, currentFrame, moveDirection) {
@@ -48,8 +59,8 @@ class Pokemon {
   }
 
   resetPkPos() {
-    this.x = 32 + Math.random() * (this.width - 64);
-    this.y = 32 + Math.random() * (this.height - 64);
+    this.x =  Math.random() * (this.width);
+    this.y = Math.random() * (this.height);
   }
 }
 

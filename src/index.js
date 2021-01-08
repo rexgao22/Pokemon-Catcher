@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   playbtn.onclick = function () {
     document.getElementById("menus").style.display = "none";
     canvasEl.style.display = "block";
+    game.start();
     game.gameCountDown();
   };
 
