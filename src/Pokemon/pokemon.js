@@ -1,16 +1,16 @@
-const pokemonImg = require("../../dist/image/pkm3.png");
+
 const Sprite = require("./sprite");
 class Pokemon {
-  constructor(height, width) {
+  constructor(img, sheetWidth, sheetHeight) {
     this.pkImg = new Image();
-    this.pkImg.src = pokemonImg;
+    this.pkImg.src = img;
     this.speed = 100;
-    this.height = height;
-    this.width = width;
+    this.height = 512;
+    this.width = 408;
     this.x = Math.random() * this.width;
     this.y = Math.random() * this.height;
     this.followSpeed = 50;
-    this.sprite = new Sprite(228, 228);
+    this.sprite = new Sprite(sheetWidth, sheetHeight);
     this.currentFrame = 0;
     this.pokeStatus = "idle"
   }

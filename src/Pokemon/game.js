@@ -3,17 +3,19 @@ const Pokemon = require("./pokemon");
 const PokemonTrainer = require("./pokemon_trainer");
 const Pokeball = require("./pokeball");
 const Board = require("./board");
+const pokemonImg = require("../../dist/image/pkm3.png");
+const pokemonImg2 = require("../../dist/image/pkm2.png")
 const backgroundImg = require("../../dist/image/background1.png");
 
 class Game {
-  constructor(boardCanvas) {
+  constructor(boardCanvas, lvl) {
     this.boardCanvas = boardCanvas;
     this.ctx = boardCanvas.getContext("2d");
     this.bgStatus = false;
     this.bgImg = new Image();
     this.bgImg.src = backgroundImg;
     this.count = 50;
-    this.pokemon = new Pokemon(this.boardCanvas.height, this.boardCanvas.width);
+    this.pokemon = new Pokemon(pokemonImg, 228, 228);
     this.trainer = new PokemonTrainer(
       this.boardCanvas.height,
       this.boardCanvas.width
@@ -31,8 +33,11 @@ class Game {
     this.boardCanvas.height = 480;
     this.pokeBalls = [];
     this.ballPool = [];
+    this.pokemons = [this.pokemon];
     this.cooldown = 5;
-    this.counter = 0;
+    this.pcounter = 0;
+    this.date = new Date();
+    this.begin = 0
   }
 
   checkImg() {
@@ -73,12 +78,20 @@ class Game {
     return x < 0 || y < 0 || x > this.width || y > this.height;
   }
 
+  difficulty() {
+    if (this.count === 40) {
+      this.pokemons.push(new Pokemon(pokemonImg2, 242, 259));
+    }
+  }
+
   update(val) {
     //38 code for up key
+    if (this.keysStore.length !== 0) {
+      this.pokemons.forEach((pokemon) => (pokemon.pokeStatus = "active"));
+    }
     if (38 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 3;
-      this.pokemon.checkStatus("active");
       this.trainer.y -= this.trainer.speed * val;
       this.trainer.y = this.wrap(this.trainer.y, this.boardCanvas.height);
     }
@@ -86,7 +99,6 @@ class Game {
     if (40 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 0;
-      this.pokemon.checkStatus("active");
       this.trainer.y += this.trainer.speed * val;
       this.trainer.y = this.wrap(this.trainer.y, this.boardCanvas.height);
     }
@@ -94,7 +106,6 @@ class Game {
     if (37 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 1;
-      this.pokemon.checkStatus("active");
       this.trainer.x -= this.trainer.speed * val;
       this.trainer.x = this.wrap(this.trainer.x, this.boardCanvas.width);
     }
@@ -102,45 +113,53 @@ class Game {
     if (39 in this.keysStore) {
       this.currentFrame += 1;
       this.moveDirection = 2;
-      this.pokemon.checkStatus("active");
       this.trainer.x += this.trainer.speed * val;
       this.trainer.x = this.wrap(this.trainer.x, this.boardCanvas.width);
     }
     //check catching
     if (32 in this.keysStore) {
-      this.counter += 1;
-      if (this.counter % this.cooldown === 0) {
+      this.pcounter += 1;
+      if (this.pcounter % this.cooldown === 0) {
         this.create();
-        this.counter = 0;
+        this.pcounter = 0;
       }
     }
-
-    if (
-      this.trainer.x <= this.pokemon.x + 30 &&
-      this.pokemon.x <= this.trainer.x + 30 &&
-      this.trainer.y <= this.pokemon.y + 30 &&
-      this.pokemon.y <= this.trainer.y + 30
-    ) {
-      this.finished = true;
-    }
-    this.pokeBalls.forEach((ball) => {
+    // this.difficulty();
+    this.pokemons.forEach((pokemon) => {
       if (
-        ball.x <= this.pokemon.x + 30 &&
-        this.pokemon.x <= ball.x + 30 &&
-        ball.y <= this.pokemon.y + 30 &&
-        this.pokemon.y <= ball.y + 30
+        this.trainer.x <= pokemon.x + 30 &&
+        pokemon.x <= this.trainer.x + 30 &&
+        this.trainer.y <= pokemon.y + 30 &&
+        pokemon.y <= this.trainer.y + 30
       ) {
-        this.pokeCount += 1;
-        this.pokemon.resetPkPos();
-        this.remove(ball);
+        this.finished = true;
       }
+      this.pokeBalls.forEach((ball) => {
+        if (
+          ball.x <= pokemon.x + 30 &&
+          pokemon.x <= ball.x + 30 &&
+          ball.y <= pokemon.y + 30 &&
+          pokemon.y <= ball.y + 30
+        ) {
+          this.pokeCount += 1;
+          pokemon.resetPkPos();
+          this.remove(ball);
+        }
+      });
     });
+  }
+
+  resetBallPos(ball) {
+    ball.x = this.trainer.x;
+    ball.y = this.trainer.y + 30;
+    ball.moveDirection = this.moveDirection;
+    return ball;
   }
 
   create() {
     this.pokeBalls.push(
       this.ballPool.length > 0
-        ? this.ballPool.pop()
+        ? this.resetBallPos(this.ballPool.pop())
         : new Pokeball(
             this.trainer.x,
             this.trainer.y,
@@ -168,22 +187,26 @@ class Game {
         this.currentFrame,
         this.moveDirection
       );
-      this.pokemon.drawPoke(
-        this.ctx,
-        this.trainer.x,
-        this.trainer.y,
-        this.currentFrame,
-        this.moveDirection
-      );
-      // this.pokeBalls.forEach((ball) => {
-      //   if (this.isOutOfBounds(ball.x, ball.y)) {
-      //     this.remove(ball);
-      //   }
-      // });
+      this.pokemons.forEach((pokemon) => {
+        pokemon.drawPoke(
+          this.ctx,
+          this.trainer.x,
+          this.trainer.y,
+          this.currentFrame,
+          this.moveDirection
+        );
+      });
+
+      this.pokeBalls.forEach((ball) => {
+        if (this.isOutOfBounds(ball.x, ball.y)) {
+          this.remove(ball);
+        }
+      });
       this.pokeBalls.forEach((ball) => {
         ball.drawBall();
       });
     }
+
     this.ctx.fillStyle = "rgb(250, 250, 250)";
     this.ctx.font = "24px Helvetica";
     this.ctx.textAign = "left";
@@ -191,6 +214,7 @@ class Game {
     this.ctx.fillText("Time: " + this.count, 20, 50);
 
     if (this.finished == true) {
+      this.counter = 0;
       this.ctx.fillText("Game over!", 200, 220);
     }
   }

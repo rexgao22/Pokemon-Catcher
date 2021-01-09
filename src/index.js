@@ -9,12 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicbtn = document.getElementById("music-btn");
   const audio = document.getElementById("audio");
 
+  
   game.bindKeyListener();
   game.start();
   playbtn.onclick = function () {
     document.getElementById("menus").style.display = "none";
+    document.getElementById("gameboy").style.display = "inline-block"
     canvasEl.style.display = "block";
-    game.start();
     game.gameCountDown();
   };
 

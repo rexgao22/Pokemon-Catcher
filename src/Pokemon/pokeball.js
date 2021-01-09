@@ -1,18 +1,20 @@
 const pokeballImg = require("../../dist/image/pkb.png");
 class Pokeball {
   constructor(x, y, ctx, moveDirection) {
-    this.x = x;
-    this.y = y;
-    this.speed = 2;
+    this.offset = 30;
+    this.x = x ;
+    this.y = y + this.offset;
+    this.speed = 10;
     this.pkbImg = new Image();
     this.pkbImg.src = pokeballImg;
     this.ctx = ctx
     this.moveDirection = moveDirection;
     this.cooldown = 3;
-    this.counter = 0;
+  
   }
  
 
+  
   drawBall() {
     // clearRect(this.x, this.y, this.width, this.height);
     // console.log("ball")
