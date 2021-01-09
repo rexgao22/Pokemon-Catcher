@@ -29,26 +29,30 @@ body {
 }
 
 .canvas {
+  cursor: none;
   display: none;
   touch-action: none;
   transform: translateZ(0);
   z-index: 1;
-  margin: 200px 600px 300px 700px;
+  top: 400px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.music{
-    background-color: var(--light);
-    width: 66px;
-    height: 62px;
-    background-image: url(../../dist/image/musicStop.png);
-    position:absolute; 
-    top:15px; 
-    right:15px;
-    border: none;
-    border-radius: 13px;
-    cursor: url(./image/pkb.png), auto;
+.music {
+  background-color: var(--light);
+  width: 66px;
+  height: 62px;
+  background-image: url(../../dist/image/musicStop.png);
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  border-radius: 13px;
+  cursor: url(./image/pkb.png), auto;
 }
-
 
 .menu {
   display: flex;
@@ -60,6 +64,7 @@ body {
   right: 0;
   top: 30vh;
 }
+
 .menu header {
   justify-content: center;
   align-items: center;
@@ -69,6 +74,25 @@ body {
   font-family: pkSolid;
   color: yellow;
 }
+
+.my-game {
+  position: relative;
+}
+.gameboy {
+  display: none;
+  top: 440px;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  position: absolute;
+
+}
+.my-game img{
+  width: 1222px;
+    height: 1300px;
+}
+
 .intro {
   display: none;
   flex-direction: column;
@@ -81,10 +105,10 @@ body {
   font-size: 20px;
 }
 
-.intro p{
-    padding-bottom: 30px;
-    font-family: pkSolid;
-    font-size: 29px;
+.intro p {
+  padding-bottom: 30px;
+  font-family: pkHollow;
+  font-size: 29px;
 }
 
 button {
@@ -96,7 +120,7 @@ button {
   width: 400px;
   height: 70px;
   border-radius: 30px;
-  font-family: pkSolid;
+  font-family: pkHollow;
   font-size: 2.6rem;
   font-weight: 600;
   color: var(--text);
@@ -121,7 +145,6 @@ button:hover {
   );
   animation: background 3s linear infinite;
 }
-
 
 @keyframes background {
   0% {
