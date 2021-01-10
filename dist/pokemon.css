@@ -121,12 +121,13 @@ button {
   height: 70px;
   border-radius: 30px;
   font-family: pkHollow;
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   font-weight: 600;
   color: var(--text);
   background-size: 100% 100%;
   box-shadow: 0 0 0 7px var(--light) inset;
   margin-bottom: 15px;
+  line-height: 0.8;
 }
 
 button:hover {
