@@ -45,7 +45,7 @@ body {
   background-color: var(--light);
   width: 66px;
   height: 62px;
-  background-image: url(../../dist/image/musicStop.png);
+  background-image: url(./image/musicStop.png);
   position: absolute;
   top: 15px;
   right: 15px;
