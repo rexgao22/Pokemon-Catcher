@@ -33,19 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (audio.paused) {
       audio.play();
       document.getElementById("music-btn").style.backgroundImage =
-<<<<<<< HEAD
-      "url(../dist/image/musicStop.png)";
-    } else if (audio.played) {
-        audio.pause();
-        document.getElementById("music-btn").style.backgroundImage =
-        "url(../dist/image/musicPlay.png)";
-=======
         "url(../../dist/image/musicStop.png)";
     } else if (audio.played) {
       audio.pause();
       document.getElementById("music-btn").style.backgroundImage =
         "url(../../dist/image/musicPlay.png)";
->>>>>>> main
     }
   };
 
