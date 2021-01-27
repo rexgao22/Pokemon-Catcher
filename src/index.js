@@ -10,9 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audio");
   const replaybtn = document.getElementById("replay-btn");
 
-  game.bindKeyListener();
+ 
   game.start();
   playbtn.onclick = function () {
+     game.bindKeyListener();
     document.getElementById("menus").style.display = "none";
     document.getElementById("gameboy").style.display = "inline-block";
     canvasEl.style.display = "block";
