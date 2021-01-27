@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game(canvasEl);
   const musicbtn = document.getElementById("music-btn");
   const audio = document.getElementById("audio");
+  const replaybtn = document.getElementById("replay-btn");
 
-  
   game.bindKeyListener();
   game.start();
   playbtn.onclick = function () {
     document.getElementById("menus").style.display = "none";
-    document.getElementById("gameboy").style.display = "inline-block"
+    document.getElementById("gameboy").style.display = "inline-block";
     canvasEl.style.display = "block";
     game.gameCountDown();
   };
@@ -23,21 +23,34 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("menus").style.display = "none";
     document.getElementById("intro").style.display = "block";
   };
-  
+
   backbtn.onclick = function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("menus").style.display = "block";
   };
 
-  musicbtn.onclick= function() {
+  musicbtn.onclick = function () {
     if (audio.paused) {
       audio.play();
       document.getElementById("music-btn").style.backgroundImage =
+<<<<<<< HEAD
       "url(../dist/image/musicStop.png)";
     } else if (audio.played) {
         audio.pause();
         document.getElementById("music-btn").style.backgroundImage =
         "url(../dist/image/musicPlay.png)";
+=======
+        "url(../../dist/image/musicStop.png)";
+    } else if (audio.played) {
+      audio.pause();
+      document.getElementById("music-btn").style.backgroundImage =
+        "url(../../dist/image/musicPlay.png)";
+>>>>>>> main
     }
-  }
+  };
+
+  replaybtn.onclick = function () {
+    document.getElementById("replay").style.display = "none";
+    game.replay();
+  };
 });
