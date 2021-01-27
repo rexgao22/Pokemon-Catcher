@@ -86,11 +86,10 @@ body {
   transform: translate(-50%, -50%);
   z-index: 2;
   position: absolute;
-
 }
-.my-game img{
+.my-game img {
   width: 1222px;
-    height: 1300px;
+  height: 1300px;
 }
 
 .intro {
@@ -103,6 +102,16 @@ body {
   right: 0;
   top: 30vh;
   font-size: 20px;
+}
+
+#replay {
+  display: none;
+  z-index: 7;
+  position: fixed;
+  height: 50;
+  top: 50%;
+  width: 50;
+  right: 35%;
 }
 
 .intro p {

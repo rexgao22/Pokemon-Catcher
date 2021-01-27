@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./pokemon.css">
+    <link rel="stylesheet" href="./modal.css">
+    <link rel="icon" href="./image/pkb.png">
     <title>Pokemon Catch</title>
     <script type="application/javascript" src="./main.js"></script>
+    <script src="https://kit.fontawesome.com/647dbb222d.js" crossorigin="anonymous"></script>
 </head>
 <body class="pokemon">
     
@@ -25,19 +28,9 @@
             <p>Catch'em All before time run out</p>
             <button type="button" id="back">Back</button>
         </article>
-        <!-- <div class="menu menu--pause">
-            <h1>Pause</h1>
-            <button type="button" class="resume-btn">Resume</button>
-            <button type="button" class="menu-btn--pause">Main Menu</button>
+        <div id="replay" class="replay">
+            <button type="button" id="replay-btn">Replay</button>
         </div>
-        <div class="menu menu--score">
-            <h1>Game Over</h1>
-            <h2>Score:</h2>
-            <div class="final-score-lbl"></div>
-            <div class="high-score-lbl"></div>
-            <button type="button" class="play-again-btn">Play Again</button>
-            <button type="button" class="menu-btn--score">Main Menu</button>
-        </div> -->
     </div>
     
     <div class= "my-game">
@@ -45,5 +38,43 @@
         <canvas id="mycanvas" class='canvas' ></canvas>
         <!-- <audio src="audio/bgm.mp3" autoplay=true type="audio" loop=true></audio> -->
     </div>
+    <div class="container">
+  <div class="email" onclick="this.classList.add('expand')">
+    <div class="from">
+      <div class="from-contents">
+        <div class="avatar me"></div>
+        <div class="name">About Me</div>
+      </div>
+    </div>
+    <div class="to">
+      <div class="to-contents">
+        <div class="top">
+          <div class="avatar-large me"></div>
+          <div class="name-large">Rex Gao</div>
+          <div class="x-touch" onclick="document.querySelector('.email').classList.remove('expand');event.stopPropagation();">
+            <div class="x">
+              <div class="line1"></div>
+              <div class="line2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+              <a target="_blank" href="https://github.com/rexgao22">
+            <i class="fab fa-github-square fa-3x"></i>
+          </a>
+          <a target="_blank" href="https://www.linkedin.com/in/rex-gao-61a9a5139/">
+            <i class="fab fa-linkedin fa-3x"></i>
+          </a>
+          <a target="_blank" href="https://angel.co/u/rex-gao">
+            <i class="fab fa-angellist fa-3x"></i>
+          </a>
+          <a target="_blank" href="https://rexgao22.github.io/Rex-Profile/">
+            <i class="far fa-address-card fa-3x"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

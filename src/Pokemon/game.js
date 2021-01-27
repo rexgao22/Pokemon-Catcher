@@ -27,6 +27,7 @@ class Game {
     this.bindKeyListener = this.bindKeyListener.bind(this);
     this.gameCountDown = this.gameCountDown.bind(this);
     this.counter = this.counter.bind(this);
+    this.replay = this.replay.bind(this);
     this.currentFrame = 0;
     this.moveDirection = 1;
     this.boardCanvas.width = 512;
@@ -47,6 +48,15 @@ class Game {
     };
   }
 
+  replay() {
+    this.pokemons.forEach((pokemon) => {
+    pokemon.resetPkPos();
+    });
+    this.finished = false;
+    this.count = 50;
+    // this.start();
+
+  }
   bindKeyListener() {
     document.addEventListener(
       "keydown",
@@ -216,6 +226,7 @@ class Game {
     if (this.finished == true) {
       this.counter = 0;
       this.ctx.fillText("Game over!", 200, 220);
+      document.getElementById("replay").style.display = "block";
     }
   }
 
