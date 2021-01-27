@@ -54,6 +54,7 @@ class Game {
     });
     this.finished = false;
     this.count = 50;
+    this.pokeCount = 0;
     // this.start();
 
   }
