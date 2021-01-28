@@ -4,7 +4,7 @@ const PokemonTrainer = require("./pokemon_trainer");
 const Pokeball = require("./pokeball");
 const Board = require("./board");
 const pokemonImg = require("../../dist/image/pkm3.png");
-const pokemonImg2 = require("../../dist/image/pkm2.png")
+const pokemonImg2 = require("../../dist/image/pkm2.png");
 const backgroundImg = require("../../dist/image/background1.png");
 
 class Game {
@@ -28,6 +28,7 @@ class Game {
     this.gameCountDown = this.gameCountDown.bind(this);
     this.counter = this.counter.bind(this);
     this.replay = this.replay.bind(this);
+    this.removeKeyListeners = this.removeKeyListeners();
     this.currentFrame = 0;
     this.moveDirection = 1;
     this.boardCanvas.width = 512;
@@ -38,26 +39,24 @@ class Game {
     this.cooldown = 5;
     this.pcounter = 0;
     this.date = new Date();
-    this.begin = 0
+    this.begin = 0;
   }
 
-  checkImg() {
-    // console.log('check')
-    this.bgImg.onload = () => {
-      this.bgStatus = true; //Execute immediately after a page has been loaded:
-    };
-  }
+  // checkImg() {
+  //   this.bgImg.onload = () => {
+  //     this.bgStatus = true; //Execute immediately after a page has been loaded:
+  //   };
+  // }
 
   replay() {
     this.pokemons.forEach((pokemon) => {
-    pokemon.resetPkPos();
+      pokemon.resetPkPos();
     });
     this.finished = false;
     this.count = 50;
     this.pokeCount = 0;
-    // this.start();
-
   }
+
   bindKeyListener() {
     document.addEventListener(
       "keydown",
@@ -73,6 +72,15 @@ class Game {
       },
       false
     );
+  }
+
+  removeKeyListeners() {
+    document.removeEventListener("keydown", (key) => {
+      this.keysStore[key.keyCode] = true;
+    });
+    document.removeEventListener("keyup", (key) => {
+      delete this.keysStore[key.keyCode];
+    });
   }
 
   wrap(coord, max) {
@@ -186,10 +194,10 @@ class Game {
   }
 
   render() {
-    this.checkImg();
-    if (this.bgStatus) {
-      this.ctx.drawImage(this.bgImg, 0, 0);
-    }
+    // this.checkImg();
+    // if (this.bgStatus) {
+    this.ctx.drawImage(this.bgImg, 0, 0);
+    // }
     if (this.finished === false) {
       this.trainer.drawTrainer(
         this.ctx,
@@ -226,8 +234,13 @@ class Game {
 
     if (this.finished == true) {
       this.counter = 0;
+      this.count = 0;
       this.ctx.fillText("Game over!", 200, 220);
-      document.getElementById("replay").style.display = "block";
+      if (
+        document.getElementById("intro-back").style.display === "inline-block"
+      ) {
+        document.getElementById("replay").style.display = "block";
+      }
     }
   }
 
@@ -241,6 +254,7 @@ class Game {
   }
 
   gameCountDown() {
+    this.count = 50;
     setInterval(this.counter, 1000);
   }
 

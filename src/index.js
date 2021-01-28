@@ -9,13 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicbtn = document.getElementById("music-btn");
   const audio = document.getElementById("audio");
   const replaybtn = document.getElementById("replay-btn");
+  const introBackbtn = document.getElementById("intro-back-btn");
 
-  
-  game.start();
   playbtn.onclick = function () {
+    game.start();
     game.bindKeyListener();
     document.getElementById("menus").style.display = "none";
     document.getElementById("gameboy").style.display = "inline-block";
+    document.getElementById("intro-back").style.display = "inline-block";
     canvasEl.style.display = "block";
     game.gameCountDown();
   };
@@ -45,5 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
   replaybtn.onclick = function () {
     document.getElementById("replay").style.display = "none";
     game.replay();
+  };
+
+  introBackbtn.onclick = function () {
+    document.getElementById("menus").style.display = "block";
+    document.getElementById("gameboy").style.display = "none";
+    canvasEl.style.display = "none";
+    document.getElementById("intro-back").style.display = "none";
+    document.getElementById("replay").style.display = "none";
   };
 });

@@ -102,22 +102,24 @@ body {
   right: 0;
   top: 30vh;
   font-size: 20px;
+  line-height: 2.9em;
+  text-align: center;
+}
+.intro p:nth-child(3) {
+  padding-bottom: 30px;
 }
 
 #replay {
   display: none;
   z-index: 7;
-  /* position: fixed; */
   height: 50;
   top: 50%;
-  /* width: 50;
-  right: 35%; */
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
   top: 34vh;
-  /* z-index: 2; */
   opacity: 1;
   font-size: 6.5em;
   background: black;
@@ -128,18 +130,30 @@ body {
   transition: opacity 3000ms ease-in-out;
 }
 #replay-btn {
-  position: absolute;
+  margin: 0 auto;
   justify-content: center;
-
   top: 78px;
   position: relative;
-  left: 36%;
+}
+
+#back {
+  position: relative;
+  margin: 0 auto;
 }
 
 .intro p {
-  padding-bottom: 30px;
   font-family: pkHollow;
   font-size: 29px;
+}
+
+.intro-back {
+  display: none;
+}
+
+#intro-back-btn {
+  width: 160px;
+  position: absolute;
+  left: 14px;
 }
 
 button {
